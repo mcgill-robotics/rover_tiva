@@ -2,4 +2,5 @@ KERNEL=="ttyACM*",ATTRS{idVendor}=="1cbe",ATTRS{idProduct}=="0240",ATTRS{serial}
 KERNEL=="ttyACM*",ATTRS{idVendor}=="1cbe",ATTRS{idProduct}=="0240",ATTRS{serial}=="00000002",MODE:="0666",SYMLINK+="arm_elbow"
 KERNEL=="ttyACM*",ATTRS{idVendor}=="1cbe",ATTRS{idProduct}=="0240",ATTRS{serial}=="00000003",MODE:="0666",SYMLINK+="arm_wrist"
 KERNEL=="ttyACM*",ATTRS{idVendor}=="1cbe",ATTRS{idProduct}=="0240",ATTRS{serial}=="00000004",MODE:="0666",SYMLINK+="sampling"
+KERNEL=="ttyACM*",ATTRS{idVendor}=="1cbe",ATTRS{idProduct}=="0240",ATTRS{serial}=="00000005",MODE:="0666",SYMLINK+="drive_middle"
 KERNEL=="ttyACM*",ATTRS{idVendor}=="1cbe",ATTRS{idProduct}=="0240",ATTRS{serial}=="00000000",MODE:="0666",SYMLINK+="tiva%n"
