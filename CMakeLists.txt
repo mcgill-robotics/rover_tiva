@@ -7,6 +7,7 @@ find_package(catkin REQUIRED COMPONENTS
   rosserial_tivac
   std_msgs
   roscpp
+  rover_common
   genmsg
 )
 

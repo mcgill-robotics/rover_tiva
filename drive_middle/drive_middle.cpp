@@ -47,21 +47,6 @@ extern "C"
 
 // ROS nodehandle
 ros::NodeHandle nh;
-char topic_name_left_buffer[100] = "n/a";
-char * topic_name_left_ptr[1] = {topic_name_left_buffer};
-
-char topic_name_right_buffer[100] = "n/a";
-char * topic_name_right_ptr[1] = {topic_name_right_buffer};
-
-ros::Publisher encoder_left(topic_name_left_buffer, &drive_encoder_left_msg_stamped);
-nh.advertise(encoder_left);
-
-ros::Publisher encoder_right(topic_name_right_buffer, &drive_encoder_right_msg_stamped);
-nh.advertise(encoder_right);
-
-rover_common::DriveEncoderStamped drive_encoder_left_msg_stamped;
-
-rover_common::DriveEncoderStamped drive_encoder_right_msg_stamped;
 
 //Right encoder
 volatile int32_t  Rui32QEIDirection;
@@ -75,11 +60,10 @@ volatile uint32_t Lui32QEIPosition;
 
 int main(void)
 {
-  volatile uint32_t ui32SysClkFreq;
-
   /* Set the clock to run at 120MHz.*/
-  SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ | SYSCTL_OSC_MAIN | SYSCTL_USE_PLL | SYSCTL_CFG_VCO_480), 120000000);
-
+  MAP_FPUEnable();
+  MAP_FPULazyStackingEnable();
+  MAP_SysCtlClockSet(SYSCTL_SYSDIV_2_5 | SYSCTL_USE_PLL | SYSCTL_XTAL_16MHZ | SYSCTL_OSC_MAIN);
   /* Enable peripherals.*/
   SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOD);
   SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOC);
@@ -140,26 +124,17 @@ QEIConfigure(QEI1_BASE, (QEI_CONFIG_CAPTURE_A_B | QEI_CONFIG_RESET_IDX | QEI_CON
   // ROS nodehandle initialization and topic registration.
   nh.initNode();
 
-  bool param_topic_name_left_success = false;
+  rover_common::DriveEncoderStamped drive_encoder_left_msg_stamped;
 
-  while (!param_topic_name_left_success)
-  {
-    param_topic_name_left_success = nh.getParam("~topic_name", topic_name_left_ptr);
-    nh.spinOnce();
-    nh.getHardware()->delay(10);
-  }
+  rover_common::DriveEncoderStamped drive_encoder_right_msg_stamped;
 
-  bool param_topic_name_right_success = false;
+  ros::Publisher encoder_left("encoder_left", 
+      &drive_encoder_left_msg_stamped);
+  nh.advertise(encoder_left);
 
-  while (!param_topic_name_right_success)
-  {
-    param_topic_name_right_success = nh.getParam("~topic_name", topic_name_right_ptr);
-    nh.spinOnce();
-    nh.getHardware()->delay(10);
-  }
-
-
-
+  ros::Publisher encoder_right("encoder_right", 
+      &drive_encoder_right_msg_stamped);
+  nh.advertise(encoder_right);
 
   while (1)
   {
