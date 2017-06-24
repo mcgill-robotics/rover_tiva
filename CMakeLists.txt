@@ -110,3 +110,11 @@ rosserial_add_client_target(drive_middle dump)
 # rosserial_add_client_target(power flash)
 # rosserial_add_client_target(power size)
 # rosserial_add_client_target(power dump)
+
+
+# Install
+install(TARGETS brake_motor_service reset_motor_service
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
