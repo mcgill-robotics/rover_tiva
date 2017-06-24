@@ -21,9 +21,9 @@ add_dependencies(rover_tiva_ros_lib
   rover_common_generate_messages_lisp
 )
 
-catkin_package(CATKIN_DEPENDS std_msgs rover_common)
+catkin_package(CATKIN_DEPENDS std_msgs)
 
-include_directories(include ${catkin_INCLUDE_DIRS})
+include_directories(${catkin_INCLUDE_DIRS})
 
 add_executable(reset_motor_service reset_motor_service.cpp)
 target_link_libraries(reset_motor_service ${catkin_LIBRARIES})
