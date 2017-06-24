@@ -2,45 +2,45 @@ cmake_minimum_required(VERSION 2.8.3)
 project(rover_tiva)
 
 find_package(catkin REQUIRED COMPONENTS
+  genmsg
   message_generation
+  roscpp
   rosserial_client
   rosserial_tivac
   std_msgs
-  roscpp
   rover_common
-  genmsg
 )
 
 add_service_files(
   DIRECTORY srv
-  FILES ResetMotor.srv BrakeMotor.srv)
-
+  FILES
+  ResetMotor.srv
+  BrakeMotor.srv
+)
 
 rosserial_generate_ros_lib(
   PACKAGE rosserial_tivac
   SCRIPT make_libraries_tiva
 )
 
-
 generate_messages(DEPENDENCIES std_msgs)
 
-catkin_package()
+add_dependencies(rover_tiva_ros_lib
+  rover_common_generate_messages_cpp
+  rover_common_generate_messages
+  rover_common_generate_messages_py
+  rover_common_generate_messages_lisp
+)
+
+catkin_package(CATKIN_DEPENDS message_runtime std_msgs rover_common)
 
 include_directories(include ${catkin_INCLUDE_DIRS})
 
 add_executable(reset_motor_service reset_motor_service.cpp)
 target_link_libraries(reset_motor_service ${catkin_LIBRARIES})
-add_dependencies(reset_motor_service
-    rover_tiva_generate_messages_cpp
-    ${catkin_EXPORTED_TARGETS})
 
 add_executable(brake_motor_service brake_motor_service.cpp)
 target_link_libraries(brake_motor_service ${catkin_LIBRARIES})
-add_dependencies(brake_motor_service
-    rover_tiva_generate_messages_cpp
-    ${catkin_EXPORTED_TARGETS})
-
-
 
 rosserial_configure_client(
   DIRECTORY arm_shoulder

@@ -40,17 +40,28 @@
   <!-- Use test_depend for packages you need only for testing: -->
   <!--   <test_depend>gtest</test_depend> -->
   <buildtool_depend>catkin</buildtool_depend>
+
+  <!-- Cpp build and runtime -->
+  <build_depend>roscpp</build_depend>
+  <run_depend>roscpp</run_depend>
+
+  <!-- Rosserial -->
   <build_depend>rosserial_client</build_depend>
   <build_depend>rosserial_tivac</build_depend>
-  <build_depend>std_msgs</build_depend>
-  <build_depend>roscpp</build_depend>
-  <build_depend>rover_common</build_depend>
   <run_depend>rosserial_client</run_depend>
   <run_depend>rosserial_tivac</run_depend>
+
+  <!-- Required messages -->
+  <build_depend>std_msgs</build_depend>
   <run_depend>std_msgs</run_depend>
-  <run_depend>roscpp</run_depend>
+  <build_depend>rover_common</build_depend>
   <run_depend>rover_common</run_depend>
 
+  <!-- Message generation -->
+  <build_depend>message_generation</build_depend>
+  <run_depend>message_runtime</run_depend>
+  <build_depend>genmsg</build_depend>
+  <run_depend>genmsg</run_depend>
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>
