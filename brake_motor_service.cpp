@@ -10,14 +10,14 @@
 #include <std_msgs/Bool.h>
 
 #include <ros/ros.h>
-#include "rover_tiva/BrakeMotor.h"
+#include <rover_common/BrakeMotor.h>
 
 
 
 std_msgs::Bool brake_msg;
 ros::Publisher brake_publisher;
 
-bool brake_cb(const rover_tiva::BrakeMotorRequest& request, rover_tiva::BrakeMotorResponse& response){
+bool brake_cb(const rover_common::BrakeMotorRequest& request, rover_common::BrakeMotorResponse& response){
   ros::NodeHandle nh_temp;
 
   brake_msg.data = request.Enable;
@@ -33,6 +33,7 @@ int main(int argc, char **argv)
 {
   ros::init(argc, argv, "arm_motor_brake_server");
   ros::NodeHandle nh;
-  ros::ServiceServer service = nh.advertiseService<rover_tiva::BrakeMotorRequest, rover_tiva::BrakeMotorResponse>("arm_motor_brake_server", &brake_cb);
+  ros::ServiceServer service = nh.advertiseService<rover_common::BrakeMotorRequest,
+          rover_common::BrakeMotorResponse>("arm_motor_brake_server", &brake_cb);
   ros::spin();
 }
